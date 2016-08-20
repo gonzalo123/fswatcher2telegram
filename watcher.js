@@ -16,12 +16,14 @@ try {
 bot = new TeleBot(configuration.telegramBotAPIKey);
 
 configuration.pathsToWatch.map(function(path) {
-    console.log(`Watching ${path}...`);
+    console.log(`Watching ${path} ...`);
     fs.watch(path, {encoding: 'string', recursive: false}, (eventType, filename) => {
-        if (filename && eventType == 'change') {
-            fs.lstat(path, (err, stats) => {
-                if (stats && (stats.isDirectory() || stats.isFile())) {
-                    bot.sendMessage(configuration.telegramChatId, `New resource found: ${filename}`);
+        if (filename) {
+            fs.lstat(`${path}/${filename}`, (err, stats) => {
+                if (stats) {
+                    if ((eventType == 'change' && stats.isFile()) || (eventType == 'rename' && stats.isDirectory())) {
+                        bot.sendMessage(configuration.telegramChatId, `New resource found: ${filename}`);
+                    }
                 }
             });
         }
