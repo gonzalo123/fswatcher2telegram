@@ -1,6 +1,5 @@
 var fs = require('fs'),
     TeleBot = require('telebot'),
-    basePath = '/mnt/media/torrent/Descargas',
     configuration,
     bot;
 
@@ -22,7 +21,7 @@ configuration.pathsToWatch.map(function(path) {
             fs.lstat(`${path}/${filename}`, (err, stats) => {
                 if (stats) {
                     if ((eventType == 'change' && stats.isFile()) || (eventType == 'rename' && stats.isDirectory())) {
-                        bot.sendMessage(configuration.telegramChatId, `New resource found: ${filename}`);
+                        bot.sendMessage(configuration.telegramChatId, `fsWatcher. New resource found: ${filename}`);
                     }
                 }
             });
