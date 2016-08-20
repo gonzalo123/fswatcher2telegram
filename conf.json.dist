@@ -1,0 +1,5 @@
+{
+    "telegramBotAPIKey":"my_telegram_api_key",
+    "telegramChatId":"my_chatid",
+    "pathsToWatch": ["/path/to/watch1", "/path/to/watch2"]
+}
