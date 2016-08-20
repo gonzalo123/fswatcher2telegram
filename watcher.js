@@ -18,10 +18,10 @@ bot = new TeleBot(configuration.telegramBotAPIKey);
 configuration.pathsToWatch.map(function(path) {
     console.log(`Watching ${path}...`);
     fs.watch(path, {encoding: 'string', recursive: false}, (eventType, filename) => {
-        if (filename && eventType == 'rename') {
+        if (filename && eventType == 'change') {
             fs.lstat(path, (err, stats) => {
                 if (stats && (stats.isDirectory() || stats.isFile())) {
-                    bot.sendMessage(configuration.telegramChatId, `New resource found at ${filename}`);
+                    bot.sendMessage(configuration.telegramChatId, `New resource found: ${filename}`);
                 }
             });
         }
